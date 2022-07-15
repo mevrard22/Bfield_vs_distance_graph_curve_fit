@@ -16,33 +16,36 @@ import functions
 # If output two things you can define two variables in same line
 xdata, ydata = functions.read_csv()
 
-print(xdata)
-print(ydata)
-# Make a satterplot with the graph
-plt.scatter(xdata, ydata)
+# print(xdata)
+# print(ydata)
+# Make a scatterplot with the graph
+plt.scatter(xdata, ydata, label="Experimental Data")
 
-# Adding a title and x, y labels to the graph
+# Adding a title and x, y labels to the graph, and a legend
 plt.title("Magnetic Field Strength of Disc Magnet vs Gauss Meter Distance")
 plt.xlabel("Distance (m)")
 plt.ylabel("Magnetic Field Strength (T)")
 
 
 def func(x, a, c):
-    return (10**(-7)) * (((3 * a) - a) / (x + c)**3)
+    return (10 ** (-7)) * (((3 * a) - a) / (x + c) ** 3)
 
-# Create placeholder function data to plot func
+
+# Lengths of both data sets need to be same for plot to work
+# print(len(xdata))
+
+# Find the optimal parameters and fit of the curve (and formatting to 5 and 7 decimal places)
+popt, perr = curve_fit(func, xdata, ydata)
+print("Estimation of magnetization: " + str(format(float(popt[0]), '.5f'))
+      + "\n" + "Zero error: " + str(format(float(popt[1]), '.7f')))
+
+# Plot the curve with the optimal parameter
 funcdata = []
 for i in range(0, 41):
-    funcdata += [func(xdata[i], 0.42337, 0.00766)]
+    funcdata += [func(xdata[i], popt[0], popt[1])]
 
-# Lenghts of both data sets need to be same for plot to work
-print(len(xdata))
-print(len(funcdata))
-plt.plot(xdata, funcdata)
-
-# plt.plot(xdata, funcdata)
-popt, pcov = curve_fit(func, xdata, ydata)
-
+plt.plot(xdata, funcdata, label="model", color="black")
 
 # Make the graph
+plt.legend()
 plt.show()
