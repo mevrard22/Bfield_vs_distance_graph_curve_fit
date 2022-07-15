@@ -15,7 +15,7 @@ import functions
 x = functions.read_csv()[0]
 y = functions.read_csv()[1]
 
-# Make a scatterplot with the graph
+# Make a satterplot with the graph
 plt.scatter(x, y)
 
 # Adding a title and x, y labels to the graph
