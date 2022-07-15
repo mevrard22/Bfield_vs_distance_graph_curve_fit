@@ -5,9 +5,8 @@ def read_csv():
     array_y = []
     with open('data.csv') as csv_file:
         # reading the CSV file
-        data = csv.reader(csv_file, delimiter=',')
+        data = csv.reader(csv_file)
         for row in data:
-            print(row[0])
             # NEED SQUARE BRACKET TO ADD ELEMENT
             array_x += [float(row[0])]
             array_y += [float(row[1])]
